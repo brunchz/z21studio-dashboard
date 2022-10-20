@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AACE,eADa,AACZ,cAAc,CAAC;EACd,UAAU,EAAE,IAAI;CACjB;;AAHH,AAKE,eALa,CAKb,YAAY,CAAC;EACX,MAAM,EAAE,IAAI;EACZ,UAAU,EAAE,IAAI;EAChB,SAAS,EAAE,IAAI;CAChB;;AAGH,MAAM,CAAC,MAAM,MAAM,SAAS,EAAE,KAAK;EACjC,AAAA,GAAG,AAAA,QAAQ,CAAC;IACV,OAAO,EAAE,IAAI;GACd",
+    "sources": [
+        "UserForm.scss"
+    ],
+    "names": [],
+    "file": "UserForm.css"
+}

@@ -16,8 +16,9 @@ import ErrorMessage from 'components/ErrorMessage';
 import './UserForm.scss';
 
 const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
-  const { loading, success } = useSelector(
+  const { currentUserIsAdmin, loading, success } = useSelector(
     (state) => ({
+      currentUserIsAdmin: state.auth.userData.isAdmin,
       loading: state.users.loading,
       success: state.users.success,
     }),
@@ -253,6 +254,78 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                   </div>
                 </div>
 
+                {currentUserIsAdmin && (
+                  <>
+                    <hr />
+                    <div className="field is-horizontal">
+                      <div className="field-label is-normal">
+                        <label className="label">
+                          {useFormatMessage('UserForm.metaReport')}
+                        </label>
+                      </div>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <input
+                              name="biReports.metaReport"
+                              className={classNames('input', {
+                                'is-danger': errors.metaReport,
+                              })}
+                              ref={register}
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="field is-horizontal">
+                      <div className="field-label is-normal">
+                        <label className="label">
+                          {useFormatMessage('UserForm.shopifyReport')}
+                        </label>
+                      </div>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <input
+                              name="biReports.shopifyReport"
+                              className={classNames('input', {
+                                'is-danger': errors.shopifyReport,
+                              })}
+                              ref={register}
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="field is-horizontal">
+                      <div className="field-label is-normal">
+                        <label className="label">
+                          {useFormatMessage('UserForm.googleReport')}
+                        </label>
+                      </div>
+                      <div className="field-body">
+                        <div className="field">
+                          <div className="control">
+                            <input
+                              name="googleReport"
+                              id="reports"
+                              className={classNames('input', {
+                                'is-danger': errors.googleReport,
+                              })}
+                              ref={register}
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+
                 <hr />
                 <div className="field is-horizontal">
                   <div className="field-label" />
@@ -262,9 +335,8 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
                         <div className="control">
                           <button
                             type="submit"
-                            className={`button is-primary ${
-                              loading && 'is-loading'
-                            }`}
+                            className={`button is-primary ${loading && 'is-loading'
+                              }`}
                           >
                             <span>{useFormatMessage('UserForm.submit')}</span>
                           </button>
@@ -386,6 +458,7 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
             </div>
           </div>
         </div>
+
       </div>
     </>
   );
@@ -394,10 +467,12 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
 UserForm.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string,
-    isAdmin: PropTypes.bool.isRequired,
+    isAdmin: PropTypes.bool,
     name: PropTypes.string.isRequired,
+    biReports: PropTypes.shape({ metaReport: PropTypes.string, shopifyReport: PropTypes.string, googleReport: PropTypes.string }),
     location: PropTypes.string,
     logoUrl: PropTypes.string,
+    reportUrl: PropTypes.string,
     createdAt: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
@@ -410,7 +485,7 @@ UserForm.propTypes = {
 
 UserForm.defaultProps = {
   isEditing: false,
-  isProfile: false,
+  isProfile: false
 };
 
 export default UserForm;

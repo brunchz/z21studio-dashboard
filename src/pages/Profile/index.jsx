@@ -28,6 +28,7 @@ const Profile = () => {
     const newUser = {
       ...value,
       file: value?.file[0] || null,
+      report: value?.report[0] || null,
       isEditing: true,
       isProfile: true,
       id: userData.id,
@@ -50,7 +51,7 @@ const Profile = () => {
           onSubmitHandler={onSubmitHandler}
           schema={schema}
         />
-        <ChangePassword />
+        <ChangePassword  />
       </section>
     </>
   );

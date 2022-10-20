@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,CAAC;EACP,MAAM,EAAE,MAAM;CACf",
+    "sources": [
+        "NotFound.module.scss"
+    ],
+    "names": [],
+    "file": "NotFound.module.css"
+}

@@ -36,7 +36,6 @@ const Users = () => {
     if (isAdmin) {
       dispatch(fetchUsers());
     }
-
     return () => dispatch(usersCleanUp());
   }, [dispatch, isAdmin]);
 

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,AAAA,MAAM,CAAC;EACjB,gBAAgB,EAAE,OAAO;EACzB,KAAK,EAAE,KAAK;CACb",
+    "sources": [
+        "Aside.module.scss"
+    ],
+    "names": [],
+    "file": "Aside.module.css"
+}

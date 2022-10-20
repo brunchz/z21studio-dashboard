@@ -26,7 +26,6 @@ export const fetchCollection = async (collection, options = {}) => {
         ...value,
       }))
     : [];
-
   return data;
 };
 
@@ -40,4 +39,12 @@ export const createDocument = (collection, id, values) => {
 
 export const updateDocument = (collection, id, values) => {
   return getRealTimeRef(`${collection}/${id}`).update(values);
+};
+
+export const addPastReport = (collection, id, values) => {
+  return getRealTimeRef(`${collection}/${id}/reportObj`).push(values);
+};
+
+export const deletePastReport = (collection, id, uid) => {
+  return getRealTimeRef(`${collection}/${id}/reportObj/${uid}`).remove();
 };

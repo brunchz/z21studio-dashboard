@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useFormatMessage } from 'hooks';
 import paths from 'pages/Router/paths';
 import NavLink from '../Link';
-import classes from './Aside.module.scss';
+//  import classes from './Aside.module.scss';
 
 export const SubMenu = ({ label, children }) => {
   const [active, setActive] = useState(false);
@@ -59,28 +59,15 @@ const Aside = ({ handleMobileToggle }) => {
     <aside className="aside is-placed-left is-expanded">
       <Link to={paths.ROOT} className="aside-tools">
         <div className="aside-tools-label">
-          <span>
-            <b>React</b> Firebase
-          </span>
+          <img style={{width:'100px',margin:'8px 8px'}}
+                    src="https://uploads-ssl.webflow.com/60a3cf14fca52a5ff532af47/60a5a62513201d535a1ac0a4_Logo.svg"
+                    alt="z21studio.com"
+                  />
         </div>
       </Link>
       <div className="menu is-menu-main">
         <ul className="menu-list">
-          <li>
-            <NavLink
-              to={paths.ROOT}
-              className="has-icon"
-              onClick={handleMobileToggle}
-            >
-              <span className="icon">
-                <i className="mdi mdi-home" />
-              </span>
-              <span className="menu-item-label">
-                {useFormatMessage('Aside.home')}
-              </span>
-            </NavLink>
-          </li>
-          {isAdmin && (
+        {isAdmin && (
             <li>
               <NavLink
                 to={paths.USERS}
@@ -94,26 +81,64 @@ const Aside = ({ handleMobileToggle }) => {
               </NavLink>
             </li>
           )}
-          <SubMenu label={useFormatMessage('Aside.dropdownMenu')}>
+          {!isAdmin && (
+          <li>
+            <NavLink
+              to="/report/meta"
+              className="has-icon"
+              onClick={handleMobileToggle}
+            >
+              <span className="icon">
+                <i className="mdi mdi-facebook" />
+              </span>
+              <span className="menu-item-label">
+                {useFormatMessage('Aside.meta')}
+              </span>
+            </NavLink>
+          </li>
+          )}
+          {!isAdmin && (
             <li>
               <NavLink
-                className={classes.submenuLink}
-                to={paths.SUBMENU_1}
+                to="/report/shopify"
+                className="has-icon"
                 onClick={handleMobileToggle}
               >
-                <span>{useFormatMessage('Aside.submenu1')}</span>
+                <span className="icon">
+                  <i className="mdi mdi-shopify" />
+                </span>
+                <span className="menu-item-label">{useFormatMessage('Aside.shopify')}</span>
               </NavLink>
             </li>
+          )}
+          {!isAdmin && (
             <li>
               <NavLink
-                className={classes.submenuLink}
-                to={paths.SUBMENU_2}
+                to="/report/google"
+                className="has-icon"
                 onClick={handleMobileToggle}
               >
-                <span>{useFormatMessage('Aside.submenu2')}</span>
+                <span className="icon">
+                  <i className="mdi mdi-google" />
+                </span>
+                <span className="menu-item-label">{useFormatMessage('Aside.google')}</span>
               </NavLink>
             </li>
-          </SubMenu>
+          )}
+          {!isAdmin && (
+            <li>
+              <NavLink
+                to={paths.PAST_REPORTS}
+                className="has-icon"
+                onClick={handleMobileToggle}
+              >
+                <span className="icon">
+                  <i className="mdi mdi-newspaper-variant-multiple" />
+                </span>
+                <span className="menu-item-label">{useFormatMessage('Aside.pastReports')}</span>
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
     </aside>

@@ -10,6 +10,7 @@ import {
   createDocument,
   deleteDocument,
   updateDocument,
+  addPastReport,
 } from '../api';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
@@ -98,20 +99,29 @@ const deleteLogo = (oldLogo) => {
   return firebase.storage().ref(`users/${logoPath}`).delete();
 };
 
+const deleteReport = (oldReport) => {
+  if (!oldReport.includes('firebasestorage')) {
+    return null;
+  }
+  const reportPath = oldReport.split('users%2F').pop().split('?alt=media').shift();
+  return firebase.storage().ref(`users/${reportPath}`).delete();
+};
+
 export const deleteUser = (id) => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
     const { locale } = getState().preferences;
-    const { logoUrl } = getState()
+    const { logoUrl, reportUrl } = getState()
       .users.data.filter((user) => user.id === id)
       .pop();
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
+    const deleteReportTask = reportUrl ? deleteReport(reportUrl) : null;
 
     const deleteUserTask = deleteDocument('users', id);
 
     try {
-      await Promise.all([deleteLogoTask, deleteUserTask]);
+      await Promise.all([deleteLogoTask, deleteUserTask, deleteReportTask]);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
@@ -151,6 +161,26 @@ const getLogoUrl = (uid, file) => {
   return `${bucketUrl}/o/users%2F${uid}_200x200.${fileExtension}?alt=media`;
 };
 
+const  uploadReport = async (uid, file) => {
+  const storageRef = firebase.storage().ref();
+
+  const fileExtension = file.name.split('.').pop();
+
+  const fileName = `${file.name}.${fileExtension}`;
+
+  return storageRef.child(`users/${uid}_${fileName}`).put(file);
+};
+
+const getReportUrl = (uid, file) => {
+  const fileExtension = file.name.split('.').pop();
+
+  const bucketUrl = `${process.env.REACT_APP_FIRE_BASE_STORAGE_API}`;
+
+  const fileName = file.name.split('.')[0];
+
+  return `${bucketUrl}/o/users%2F${uid}_${fileName}.${fileExtension}?alt=media`;
+};
+
 export const createUser = ({
   name,
   email,
@@ -181,6 +211,7 @@ export const createUser = ({
     }
 
     const { uid } = response.data;
+    const biReports = { 'metaReport': '', 'shopifyReport': '', 'googleReport': '' };
 
     let uploadLogoTask = null;
     let logoUrl = null;
@@ -188,7 +219,7 @@ export const createUser = ({
       logoUrl = getLogoUrl(uid, file);
       uploadLogoTask = uploadLogo(uid, file);
     }
-    const userData = { name, email, location, logoUrl, createdAt, isAdmin };
+    const userData = { name, biReports, email, location, logoUrl, createdAt, isAdmin };
 
     const createUserDbTask = createDocument('users', uid, userData);
 
@@ -224,9 +255,11 @@ export const createUser = ({
 
 export const modifyUser = ({
   name,
+  biReports,
   location,
   isAdmin,
   file,
+  report,
   createdAt,
   id,
   isEditing,
@@ -248,17 +281,30 @@ export const modifyUser = ({
       uploadLogoTask = uploadLogo(id, file);
     }
 
+    let uploadReportTask;
+    let addPastReportTask;
+    let newReportObj = null;
+    if (report) {
+      newReportObj = getReportUrl(id, report);
+      uploadReportTask = uploadReport(id, report);
+    }
+
     const userData = {
       name,
+      biReports,
       location,
       createdAt,
       isAdmin: isAdmin || user.isAdmin,
-      logoUrl: logoUrl || newLogoUrl,
+      logoUrl: logoUrl || newLogoUrl
     };
+
     const updateUserDbTask = updateDocument('users', id, userData);
 
+    if (report) {
+      addPastReportTask = addPastReport('users', id, {'reportUrl': newReportObj, 'reportDate': report.date});
+    }
     try {
-      await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
+      await Promise.all([deleteLogoTask, uploadLogoTask, uploadReportTask, addPastReportTask, updateUserDbTask]);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);

@@ -82,7 +82,7 @@ const NavBar = ({ handleMobileToggle, asideMobileActive }) => {
         id="navbar-menu"
       >
         <div className="navbar-end">
-          <div className="navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
+          <div className="is-hidden navbar-item has-dropdown has-dropdown-with-icons has-divider has-user-avatar is-hoverable">
             <a className="navbar-link is-arrowless">
               <div className="is-user-avatar">
                 <span>

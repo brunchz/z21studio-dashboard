@@ -205,9 +205,9 @@ const Login = () => {
                   </form>
                   {!isEmailLink && (
                     <>
-                      <hr />
                       <div
                         className={classNames(
+                          'is-hidden',
                           'field',
                           'is-grouped',
                           classes.socialButtons

@@ -54,7 +54,7 @@ const Table = ({ columns, data }) => {
                   <div className="th-wrap">
                     {column.render('Header')}
                     {column.isSorted && (
-                      <span className="icon is-small">
+                      <span className="icon">
                         <i
                           className={classNames(
                             'mdi',

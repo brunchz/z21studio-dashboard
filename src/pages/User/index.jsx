@@ -8,10 +8,16 @@ import UserForm from 'components/UserForm';
 import { createUser, modifyUser, fetchUsers } from 'state/actions/users';
 import paths from 'pages/Router/paths';
 import { useFormatMessage } from 'hooks';
+import AddPastReports from './AddPastReports';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   name: yup.string().required(),
+  biReports: yup.object().shape({
+    metaReport: yup.string().notRequired(),
+    shopifyReport: yup.string().notRequired(),
+  })
+    .notRequired(),
   isAdmin: yup.boolean().notRequired(),
   location: yup.string().notRequired(),
   createdAt: yup.string().required(),
@@ -53,6 +59,7 @@ const User = () => {
     const newUser = {
       ...value,
       file: value?.file[0] || null,
+      report: value?.report[0] || null,
       isEditing,
       id,
     };
@@ -78,22 +85,31 @@ const User = () => {
         {isEditing && !userData ? (
           <ClipLoader />
         ) : (
-          <UserForm
-            isEditing={isEditing}
-            user={
-              isEditing
-                ? userData
-                : {
+          <>
+            <UserForm
+              isEditing={isEditing}
+              user={
+                isEditing
+                  ? userData
+                  : {
                     name: '',
+                    biReports: { 'metaReport': '', 'shopifyReport': '', 'googleReport': '' },
                     email: '',
                     location: '',
                     createdAt: new Date().toDateString(),
                     isAdmin: false,
                   }
-            }
-            onSubmitHandler={onSubmitHandler}
-            schema={schema}
-          />
+              }
+              onSubmitHandler={onSubmitHandler}
+              schema={schema}
+            />
+            <AddPastReports
+              isEditing={isEditing}
+              user={userData}
+              onSubmitHandler={onSubmitHandler}
+              schema={schema}
+            />
+          </>
         )}
       </section>
     </>

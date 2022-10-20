@@ -4,6 +4,8 @@ import {
   fetchCollection,
   fetchDocument,
   updateDocument,
+  addPastReport,
+  deletePastReport,
 } from './rtdb';
 
 export {
@@ -12,4 +14,6 @@ export {
   fetchCollection,
   fetchDocument,
   updateDocument,
+  addPastReport,
+  deletePastReport,
 };

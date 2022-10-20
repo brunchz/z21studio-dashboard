@@ -9,7 +9,7 @@ import ResetPassword from 'pages/ResetPassword';
 import NotFound from 'pages/NotFound';
 import User from 'pages/User';
 import Section from 'pages/Section';
-import Submenu from 'pages/Submenu';
+import Report from 'pages/Report';
 import paths from './paths';
 import PrivateRoute from './PrivateRoute';
 
@@ -24,8 +24,8 @@ const RouterComponent = () => {
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.PROFILE} component={Profile} />
         <PrivateRoute path={paths.SECTION} component={Section} />
-        <PrivateRoute path={paths.SUBMENU_1} component={Submenu} />
-        <PrivateRoute path={paths.SUBMENU_2} component={Submenu} />
+        <PrivateRoute path={paths.REPORT} component={Report}/>
+        <PrivateRoute path={paths.PAST_REPORTS} component={Report}/>
         <PrivateRoute path={paths.ROOT} component={Home} />
         <Route component={NotFound} />
       </Switch>

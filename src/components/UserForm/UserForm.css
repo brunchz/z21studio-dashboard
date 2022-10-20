@@ -1,0 +1,16 @@
+.is-user-avatar.has-max-width {
+  max-height: 7rem;
+}
+
+.is-user-avatar .user-avatar {
+  height: 100%;
+  max-height: 7rem;
+  max-width: 7rem;
+}
+
+@media screen and (max-width: 768px) {
+  div.preview {
+    display: none;
+  }
+}
+/*# sourceMappingURL=UserForm.css.map */
