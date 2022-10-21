@@ -212,14 +212,14 @@ export const createUser = ({
 
     const { uid } = response.data;
     const biReports = { 'metaReport': '', 'shopifyReport': '', 'googleReport': '' };
-
+    const reportObj = null;
     let uploadLogoTask = null;
     let logoUrl = null;
     if (file) {
       logoUrl = getLogoUrl(uid, file);
       uploadLogoTask = uploadLogo(uid, file);
     }
-    const userData = { name, biReports, email, location, logoUrl, createdAt, isAdmin };
+    const userData = { name, biReports, email, location, logoUrl, createdAt, isAdmin, reportObj};
 
     const createUserDbTask = createDocument('users', uid, userData);
 

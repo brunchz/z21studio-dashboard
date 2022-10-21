@@ -1,27 +1,39 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import { usersCleanUp, uploadPastReport } from 'state/actions/users';
+import { deleteUser, usersCleanUp, uploadPastReport } from 'state/actions/users';
 import * as yup from 'yup';
 import classNames from 'classnames';
 import ErrorMessage from 'components/ErrorMessage';
-import { useFormatMessage } from 'hooks';
+import { useFormatMessage, useFormatDate } from 'hooks';
 import DatePicker from 'components/DatePicker';
+import ConfirmationModal from 'components/ConfirmationModal';
+import Table from 'components/Table';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 //  import ErrorMessage from 'components/ErrorMessage';
 const schema = yup.object().shape({
-    reportDate:yup.string().required()
+  reportDate: yup.string().required()
 });
-const AddPastReports = ({ id, user}) => {
-  const { loading, success } = useSelector(
+const AddPastReports = ({ id, user }) => {
+  const { error, loading, success, deleted } = useSelector(
     (state) => ({
       loading: state.users.loading,
       success: state.users.success,
+      error: state.users.error,
+      deleted: state.users.deleted,
     }),
     shallowEqual
   );
+
+  const reports = user.reportObj ? Object.values(user.reportObj) : null;
+
+  const [deleteModal, setDeleteModal] = useState({
+    userId: null,
+    isOpen: false,
+  });
 
   const dispatch = useDispatch();
 
@@ -37,12 +49,20 @@ const AddPastReports = ({ id, user}) => {
     return () => dispatch(usersCleanUp());
   }, [dispatch, success, setValue]);
 
+  useEffect(() => {
+    if (deleted && !loading) {
+      setDeleteModal((prevState) => ({
+        userId: null,
+        isOpen: !prevState.isOpen,
+      }));
+    }
+  }, [deleted, loading]);
 
   const pickAnotherFileMessage = useFormatMessage('UserForm.pickAnotherFile');
   const pickFileMessage = useFormatMessage('UserForm.pickFile');
 
   const onSubmitHandler = (value) => {
-    const newReport= {
+    const newReport = {
       id,
       user,
       ...value,
@@ -51,8 +71,91 @@ const AddPastReports = ({ id, user}) => {
     dispatch(uploadPastReport(newReport));
   };
 
+  const onRemoveButtonClickHandler = (userId) => {
+    setDeleteModal((prevState) => ({
+      userId,
+      isOpen: !prevState.isOpen,
+    }));
+  };
+
+  const onCloseModalHandler = () => {
+    setDeleteModal({ userId: null, isOpen: false });
+  };
+
+  const onDeleteReportHandler = () => {
+    dispatch(deleteUser(deleteModal.userId));
+  };
+  const columns = [
+    {
+      Header: useFormatMessage('AddPastReports.reportDate'),
+      accessor: 'reportDate',
+      Cell: ({ row }) => (
+        <a
+          href={row.original.reportUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <small className="is-link" style={{ textDecorationLine: 'underline', }}>
+            {useFormatDate(row.original.reportDate, {
+              weekday: 'short',
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            })}
+          </small>
+          <span className="icon is-normal">
+            <i className="mdi mdi-link" />
+          </span>
+        </a>
+      ),
+    },
+    {
+      Header: '',
+      id: 'actions',
+      accessor: 'actions',
+      Cell: ({ row }) => (
+        <>
+          {!row.original.isAdmin && (
+            <div className="buttons is-right">
+              <button
+                type="button"
+                className="button is-normal is-danger"
+                onClick={() => onRemoveButtonClickHandler(row.original.id)}
+              >
+                <span className="icon is-normal">
+                  <i className="mdi mdi-trash-can" />
+                </span>
+              </button>
+            </div>
+          )}
+        </>
+      ),
+      disableSortBy: true,
+    },
+  ];
+
+  const deleteMessage = useFormatMessage('AddPastReports.delete');
+
+  const confirmMessage = useFormatMessage('AddPastReports.confirm');
+
+  const permDeleteMessage = useFormatMessage('AddPastReports.permDelete');
+
+  const cancelMessage = useFormatMessage('AddPastReports.cancel');
+
   return (
     <>
+      {deleteModal.isOpen && (
+        <ConfirmationModal
+          isActive={deleteModal.isOpen}
+          isLoading={loading}
+          confirmButtonMessage={deleteMessage}
+          title={confirmMessage}
+          body={permDeleteMessage}
+          cancelButtonMessage={cancelMessage}
+          onConfirmation={onDeleteReportHandler}
+          onCancel={onCloseModalHandler}
+        />
+      )}
       <div className="tile is-ancestor">
         <div className="tile is-parent">
 
@@ -79,8 +182,8 @@ const AddPastReports = ({ id, user}) => {
                         <label className="file-label is-normal">
                           <input
                             className={classNames('file-input', {
-                                'is-danger': errors.report,
-                              })}
+                              'is-danger': errors.report,
+                            })}
                             type="file"
                             name="report"
                             ref={register}
@@ -154,7 +257,7 @@ const AddPastReports = ({ id, user}) => {
             </div>
           </div>
         </div>
-        <div className="tile is-parent preview">
+        <div className="tile is-parent">
           <div className="card tile is-child">
             <header className="card-header">
               <p className="card-header-title">
@@ -164,22 +267,19 @@ const AddPastReports = ({ id, user}) => {
                 {useFormatMessage('AddPastReports.reportsTable')}
               </p>
             </header>
-            <div className="card-content">
-              <div className="field">
-                <label className="label">
-                  {useFormatMessage('AddPastReports.reportsTable')}
-                </label>
-                <div className="control is-clearfix">
-                  {
-                    Object.entries(user.reportObj).map(([key, val]) => {
-                      return (
-                        <p key={key}>{key}: {val.reportUrl}</p>
-                      );
-                    })
-                  }
+            {!reports ? (
+              <p className="card-content">
+                No reports found.
+              </p>)
+              :
+              (
+                <div className="b-table">
+                  {loading ? <ClipLoader /> : <Table columns={columns} data={reports} />}
+                  {error && 'Show error'}
                 </div>
-              </div>
-            </div>
+              )
+            }
+
           </div>
         </div>
       </div>
