@@ -111,12 +111,12 @@ export const deleteUser = (id) => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
     const { locale } = getState().preferences;
-    const { logoUrl, reportUrl } = getState()
+    const { logoUrl, reportObj } = getState()
       .users.data.filter((user) => user.id === id)
       .pop();
 
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
-    const deleteReportTask = reportUrl ? deleteReport(reportUrl) : null;
+    const deleteReportTask = reportObj ? deleteReport(reportObj) : null;
 
     const deleteUserTask = deleteDocument('users', id);
 
@@ -161,14 +161,14 @@ const getLogoUrl = (uid, file) => {
   return `${bucketUrl}/o/users%2F${uid}_200x200.${fileExtension}?alt=media`;
 };
 
-const  uploadReport = async (uid, file) => {
+const uploadReport = async (uid, file) => {
   const storageRef = firebase.storage().ref();
 
   const fileExtension = file.name.split('.').pop();
 
-  const fileName = `${file.name}.${fileExtension}`;
+  const fileName = file.name.split('.')[0];
 
-  return storageRef.child(`users/${uid}_${fileName}`).put(file);
+  return storageRef.child(`users/${uid}_${fileName}.${fileExtension}`).put(file);
 };
 
 const getReportUrl = (uid, file) => {
@@ -259,7 +259,6 @@ export const modifyUser = ({
   location,
   isAdmin,
   file,
-  report,
   createdAt,
   id,
   isEditing,
@@ -281,30 +280,20 @@ export const modifyUser = ({
       uploadLogoTask = uploadLogo(id, file);
     }
 
-    let uploadReportTask;
-    let addPastReportTask;
-    let newReportObj = null;
-    if (report) {
-      newReportObj = getReportUrl(id, report);
-      uploadReportTask = uploadReport(id, report);
-    }
-
     const userData = {
       name,
       biReports,
       location,
       createdAt,
       isAdmin: isAdmin || user.isAdmin,
-      logoUrl: logoUrl || newLogoUrl
+      logoUrl: logoUrl || newLogoUrl,
+      reportObj: user.reportObj
     };
 
     const updateUserDbTask = updateDocument('users', id, userData);
 
-    if (report) {
-      addPastReportTask = addPastReport('users', id, {'reportUrl': newReportObj, 'reportDate': report.date});
-    }
     try {
-      await Promise.all([deleteLogoTask, uploadLogoTask, uploadReportTask, addPastReportTask, updateUserDbTask]);
+      await Promise.all([deleteLogoTask, uploadLogoTask, updateUserDbTask]);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
@@ -331,4 +320,47 @@ export const modifyUser = ({
   };
 };
 
+export const uploadPastReport = ({
+  id,
+  user,
+  report,
+  reportDate,
+}) => {
+  return async (dispatch, getState) => {
+    dispatch(USERS_MODIFY_USER_INIT());
+    const { locale } = getState().preferences;
+
+    let uploadReportTask;
+    let newReportUrl = null;
+    if (report) {
+      newReportUrl = getReportUrl(id, report);
+      uploadReportTask = uploadReport(id, report);
+    }
+    const reportData = { 
+      reportUrl: newReportUrl, 
+      reportDate
+    };
+    const addPastReportTask = addPastReport('users', id, reportData);
+
+    try {
+      await Promise.all([uploadReportTask, addPastReportTask]);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_MODIFY_USER_FAIL({
+          error: errorMessage,
+        })
+      );
+    }
+    const { uid } = firebase.auth().currentUser;
+
+    if (id === uid) {
+      dispatch(AUTH_UPDATE_USER_DATA({ ...reportData, id }));
+    }
+    toastr.success('', 'Report uploaded successfully');
+
+    return dispatch(USERS_MODIFY_USER_SUCCESS({ user, id }));
+  };
+};
 export const usersCleanUp = () => (dispatch) => dispatch(USERS_CLEAN_UP());

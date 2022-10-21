@@ -129,19 +129,19 @@ const Users = () => {
             <div className="buttons is-right">
               <Link
                 to={`/users/${row.original.id}`}
-                className="button is-small is-primary"
+                className="button is-normal is-primary"
               >
-                <span className="icon is-small">
+                <span className="icon is-normal">
                   <i className="mdi mdi-account-edit" />
                 </span>
               </Link>
 
               <button
                 type="button"
-                className="button is-small is-danger"
+                className="button is-normal is-danger"
                 onClick={() => onRemoveButtonClickHandler(row.original.id)}
               >
-                <span className="icon is-small">
+                <span className="icon is-normal">
                   <i className="mdi mdi-trash-can" />
                 </span>
               </button>
@@ -155,14 +155,14 @@ const Users = () => {
 
   const data = search
     ? usersList.filter((el) => {
-        const clonedElem = { ...el };
-        delete clonedElem.id;
-        delete clonedElem.isAdmin;
-        delete clonedElem.logoUrl;
-        return Object.values(clonedElem).some((field) =>
-          field.toLowerCase().includes(search.toLowerCase())
-        );
-      })
+      const clonedElem = { ...el };
+      delete clonedElem.id;
+      delete clonedElem.isAdmin;
+      delete clonedElem.logoUrl;
+      return Object.values(clonedElem).some((field) =>
+        field.toLowerCase().includes(search.toLowerCase())
+      );
+    })
     : usersList;
 
   const deleteMessage = useFormatMessage('Users.delete');

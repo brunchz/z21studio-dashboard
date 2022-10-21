@@ -59,7 +59,6 @@ const User = () => {
     const newUser = {
       ...value,
       file: value?.file[0] || null,
-      report: value?.report[0] || null,
       isEditing,
       id,
     };
@@ -103,12 +102,13 @@ const User = () => {
               onSubmitHandler={onSubmitHandler}
               schema={schema}
             />
-            <AddPastReports
-              isEditing={isEditing}
-              user={userData}
-              onSubmitHandler={onSubmitHandler}
-              schema={schema}
-            />
+            {isEditing && (
+              <AddPastReports
+                id={id}
+                user={userData}
+              />
+            )
+            }
           </>
         )}
       </section>

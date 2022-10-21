@@ -458,7 +458,6 @@ const UserForm = ({ isEditing, isProfile, user, onSubmitHandler, schema }) => {
             </div>
           </div>
         </div>
-
       </div>
     </>
   );
