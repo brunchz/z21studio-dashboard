@@ -14,7 +14,7 @@ import DatePicker from 'components/DatePicker';
 //  import ErrorMessage from 'components/ErrorMessage';
 
 const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => {
-  const { reportObj, loading, success } = useSelector(
+  const { loading, success } = useSelector(
     (state) => ({
       reportObj: state.auth.userData.reportObj,
       loading: state.users.loading,
@@ -63,34 +63,35 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
                       {useFormatMessage('UserForm.report')}
                     </label>
                   </div>
-                  <div className="field is-horizontal">
-                    <div className="file has-name">
-                      <label className="file-label is-normal">
-                        <input
-                          className="file-input"
-                          type="file"
-                          name="report"
-                          ref={register}
-                          accept="application/pdf"
-                        />
-                        <span className="file-cta">
-                          <span className="file-icon">
-                            <i className="mdi mdi-upload" />
+                  <div className="field-body">
+                    <div className="field">
+                      <div className="file has-name">
+                        <label className="file-label is-normal">
+                          <input
+                            className="file-input"
+                            type="file"
+                            name="report"
+                            ref={register}
+                            accept="application/pdf"
+                          />
+                          <span className="file-cta">
+                            <span className="file-icon">
+                              <i className="mdi mdi-upload" />
+                            </span>
+                            <span className="file-label">
+                              {watch('report') && watch('report').file
+                                ? pickAnotherFileMessage
+                                : pickFileMessage}
+                            </span>
                           </span>
-                          <span className="file-label">
-                            {watch('report') && watch('report').file
-                              ? pickAnotherFileMessage
-                              : pickFileMessage}
+                          <span className="file-name">
+                            {watch('report') && watch('report')[0]?.name}
                           </span>
-                        </span>
-                        <span className="file-name">
-                          {watch('report') && watch('report')[0]?.name}
-                        </span>
-                      </label>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
-
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
@@ -157,13 +158,7 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
                       day: 'numeric',
                     })}
                   </p>
-                  {Object.entries(reportObj).map(([key, value]) => {
-                    return (
-                      <div key={key}>
-                        {key} = {value.reportDate}
-                      </div>
-                    );
-                  })}
+
                 </div>
               </div>
             </div>
