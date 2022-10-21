@@ -3,20 +3,20 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import { usersCleanUp } from 'state/actions/users';
-import PropTypes from 'prop-types';
-
-//  import classNames from 'classnames';
-
-import { useFormatMessage, useFormatDate } from 'hooks';
+import { usersCleanUp, uploadPastReport } from 'state/actions/users';
+import * as yup from 'yup';
+import classNames from 'classnames';
+import ErrorMessage from 'components/ErrorMessage';
+import { useFormatMessage } from 'hooks';
 import DatePicker from 'components/DatePicker';
 
 //  import ErrorMessage from 'components/ErrorMessage';
-
-const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => {
+const schema = yup.object().shape({
+    reportDate:yup.string().required()
+});
+const AddPastReports = ({ id, user}) => {
   const { loading, success } = useSelector(
     (state) => ({
-      reportObj: state.auth.userData.reportObj,
       loading: state.users.loading,
       success: state.users.success,
     }),
@@ -25,8 +25,8 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, control, watch, setValue } = useForm({
-    defaultValues: { ...user, 'createdAt': '10-10-2022' },
+  const { register, handleSubmit, control, errors, watch, setValue } = useForm({
+    defaultValues: { ...user, reportDate: new Date().toDateString() },
     resolver: yupResolver(schema),
   });
 
@@ -40,6 +40,16 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
 
   const pickAnotherFileMessage = useFormatMessage('UserForm.pickAnotherFile');
   const pickFileMessage = useFormatMessage('UserForm.pickFile');
+
+  const onSubmitHandler = (value) => {
+    const newReport= {
+      id,
+      user,
+      ...value,
+      report: value?.report[0],
+    };
+    dispatch(uploadPastReport(newReport));
+  };
 
   return (
     <>
@@ -60,7 +70,7 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
-                      {useFormatMessage('UserForm.report')}
+                      {useFormatMessage('AddPastReports.uploadReport')}
                     </label>
                   </div>
                   <div className="field-body">
@@ -68,7 +78,9 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
                       <div className="file has-name">
                         <label className="file-label is-normal">
                           <input
-                            className="file-input"
+                            className={classNames('file-input', {
+                                'is-danger': errors.report,
+                              })}
                             type="file"
                             name="report"
                             ref={register}
@@ -92,17 +104,25 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
                     </div>
                   </div>
                 </div>
+                {errors.report && (
+                  <div className="field is-horizontal">
+                    <div className="field-label is-normal" />
+                    <div className="field-body">
+                      <ErrorMessage />
+                    </div>
+                  </div>
+                )}
                 <div className="field is-horizontal">
                   <div className="field-label is-normal">
                     <label className="label">
-                      {useFormatMessage('UserForm.created')}
+                      {useFormatMessage('AddPastReports.reportDate')}
                     </label>
                   </div>
                   <div className="field-body">
                     <div className="field">
                       <Controller
                         control={control}
-                        name="createdAt"
+                        name="reportDate"
                         render={({ onChange, name, value }) => (
                           <DatePicker
                             name={name}
@@ -147,18 +167,16 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
             <div className="card-content">
               <div className="field">
                 <label className="label">
-                  {useFormatMessage('UserForm.created')}
+                  {useFormatMessage('AddPastReports.reportsTable')}
                 </label>
-                <div className="control is-clearfix" data-testid="date">
-                  <p className="date">
-                    {useFormatDate(watch('createdAt'), {
-                      weekday: 'short',
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-
+                <div className="control is-clearfix">
+                  {
+                    Object.entries(user.reportObj).map(([key, val]) => {
+                      return (
+                        <p key={key}>{key}: {val.reportUrl}</p>
+                      );
+                    })
+                  }
                 </div>
               </div>
             </div>
@@ -167,13 +185,6 @@ const AddPastReports = (isEditing, isProfile, user, onSubmitHandler, schema) => 
       </div>
     </>
   );
-};
-AddPastReports.propTypes = {
-  report: PropTypes.shape({
-    reportUrl: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-  }).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
 };
 
 export default AddPastReports;

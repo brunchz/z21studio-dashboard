@@ -105,5 +105,7 @@
   "Report.shopify": "Shopify Report",
   "Report.google": "Google Report",
   "AddPastReports.title":"Add Past Reports",
-  "AddPastReports.reportsTable": "Past Reports Table"
+  "AddPastReports.reportsTable": "Past Reports Table",
+  "AddPastReports.uploadReport": "Upload Past Report",
+  "AddPastReports.reportDate":"Report Date"
 }
