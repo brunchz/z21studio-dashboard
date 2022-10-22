@@ -11,6 +11,7 @@ import {
   deleteDocument,
   updateDocument,
   addPastReport,
+  removePastReport
 } from '../api';
 
 export const USERS_FETCH_DATA_INIT = createAction('USERS_FETCH_DATA_INIT');
@@ -99,7 +100,7 @@ const deleteLogo = (oldLogo) => {
   return firebase.storage().ref(`users/${logoPath}`).delete();
 };
 
-const deleteReport = (oldReport) => {
+const deleteReportFile = (oldReport) => {
   if (!oldReport.includes('firebasestorage')) {
     return null;
   }
@@ -111,17 +112,16 @@ export const deleteUser = (id) => {
   return async (dispatch, getState) => {
     dispatch(USERS_DELETE_USER_INIT());
     const { locale } = getState().preferences;
-    const { logoUrl, reportObj } = getState()
+    const { logoUrl } = getState()
       .users.data.filter((user) => user.id === id)
       .pop();
 
+    // Add logic to remove all reports from storage
     const deleteLogoTask = logoUrl ? deleteLogo(logoUrl) : null;
-    const deleteReportTask = reportObj ? deleteReport(reportObj) : null;
-
     const deleteUserTask = deleteDocument('users', id);
 
     try {
-      await Promise.all([deleteLogoTask, deleteUserTask, deleteReportTask]);
+      await Promise.all([deleteLogoTask, deleteUserTask]);
     } catch (error) {
       const errorMessage = firebaseError(error.code, locale);
       toastr.error('', errorMessage);
@@ -134,6 +134,30 @@ export const deleteUser = (id) => {
 
     toastr.success('', 'The user was deleted.');
     return dispatch(USERS_DELETE_USER_SUCCESS({ id }));
+  };
+};
+
+export const deletePastReport = (userData, id, reportObj, reportId) => {
+  return async (dispatch, getState) => {
+    dispatch(USERS_MODIFY_USER_INIT());
+    const { locale } = getState().preferences;
+    const deleteReportTask = reportObj ? deleteReportFile(reportObj.reportUrl) : null;
+    const removeReportTask = removePastReport('users', id, reportId);
+    
+    try {
+      await Promise.all([deleteReportTask, removeReportTask]);
+    } catch (error) {
+      const errorMessage = firebaseError(error.code, locale);
+      toastr.error('', errorMessage);
+      return dispatch(
+        USERS_MODIFY_USER_FAIL({
+          error: errorMessage,
+        })
+      );
+    }
+
+    toastr.success('', 'The report was deleted.');
+    return dispatch(USERS_MODIFY_USER_SUCCESS({ user: userData, id }));
   };
 };
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers';
-import { deleteUser, usersCleanUp, uploadPastReport } from 'state/actions/users';
+import { deletePastReport, usersCleanUp, uploadPastReport } from 'state/actions/users';
 import * as yup from 'yup';
 import classNames from 'classnames';
 import ErrorMessage from 'components/ErrorMessage';
@@ -27,11 +27,15 @@ const AddPastReports = ({ id, user }) => {
     }),
     shallowEqual
   );
-
-  const reports = user.reportObj ? Object.values(user.reportObj) : null;
+  const reports = user.reportObj ? Object.entries(user.reportObj).map(([key, value]) => {
+    return {
+      id: key,
+      ...value,
+    };
+  }):null;
 
   const [deleteModal, setDeleteModal] = useState({
-    userId: null,
+    reportId: null,
     isOpen: false,
   });
 
@@ -52,7 +56,7 @@ const AddPastReports = ({ id, user }) => {
   useEffect(() => {
     if (deleted && !loading) {
       setDeleteModal((prevState) => ({
-        userId: null,
+        reportId: null,
         isOpen: !prevState.isOpen,
       }));
     }
@@ -71,19 +75,20 @@ const AddPastReports = ({ id, user }) => {
     dispatch(uploadPastReport(newReport));
   };
 
-  const onRemoveButtonClickHandler = (userId) => {
+  const onRemoveButtonClickHandler = (reportId) => {
     setDeleteModal((prevState) => ({
-      userId,
+      reportId,
       isOpen: !prevState.isOpen,
     }));
   };
 
   const onCloseModalHandler = () => {
-    setDeleteModal({ userId: null, isOpen: false });
+    setDeleteModal({ reportId: null, isOpen: false });
   };
 
   const onDeleteReportHandler = () => {
-    dispatch(deleteUser(deleteModal.userId));
+    const {reportObj} = user;
+    dispatch(deletePastReport(user, id, reportObj[deleteModal.reportId], deleteModal.reportId));
   };
   const columns = [
     {
