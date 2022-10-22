@@ -311,7 +311,6 @@ export const modifyUser = ({
       createdAt,
       isAdmin: isAdmin || user.isAdmin,
       logoUrl: logoUrl || newLogoUrl,
-      reportObj: user.reportObj
     };
 
     const updateUserDbTask = updateDocument('users', id, userData);

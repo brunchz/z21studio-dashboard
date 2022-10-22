@@ -279,7 +279,7 @@ const AddPastReports = ({ id, user }) => {
               :
               (
                 <div className="b-table">
-                  {loading ? <ClipLoader /> : <Table columns={columns} data={reports} />}
+                  {loading ? <ClipLoader className="cliploader-center" /> : <Table columns={columns} data={reports} />}
                   {error && 'Show error'}
                 </div>
               )

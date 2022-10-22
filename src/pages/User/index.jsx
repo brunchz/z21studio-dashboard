@@ -82,7 +82,7 @@ const User = () => {
       </section>
       <section className="section is-main-section">
         {isEditing && !userData ? (
-          <ClipLoader />
+          <ClipLoader className="cliploader-center" />
         ) : (
           <>
             <UserForm

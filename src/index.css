@@ -1,5 +1,6 @@
 @charset "UTF-8";
 body {
+  font-family: "DM Sans";
   margin: 0;
   padding: 0;
 }
@@ -70,5 +71,13 @@ body {
 .error::before {
   display: inline;
   content: '⚠ ';
+}
+
+.cliploader-center {
+  position: "fixed";
+  top: "50%";
+  left: "50%";
+  -webkit-transform: "translate(-50%, -50%)";
+          transform: "translate(-50%, -50%)";
 }
 /*# sourceMappingURL=index.css.map */
