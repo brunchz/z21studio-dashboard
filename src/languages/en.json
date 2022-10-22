@@ -107,5 +107,10 @@
   "AddPastReports.title":"Add Past Reports",
   "AddPastReports.reportsTable": "Past Reports Table",
   "AddPastReports.uploadReport": "Upload Past Report",
-  "AddPastReports.reportDate":"Report Date"
+  "AddPastReports.reportDate":"Report Date",
+  "AddPastReports.reportName": "Report Name",
+  "AddPastReports.delete": "Delete",
+  "AddPastReports.confirm": "Confirm action",
+  "AddPastReports.permDelete": "This will permanently delete this report. Action can not be undone.",
+  "AddPastReports.cancel": "Cancel"
 }
