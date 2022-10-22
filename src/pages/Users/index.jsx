@@ -71,7 +71,7 @@ const Users = () => {
       accessor: 'logoUrl',
       Cell: ({ row }) => (
         <div className="image">
-          <img src={row.original.logoUrl} alt="" className="is-rounded" />
+          <img src={row.original.logoUrl} alt="" className='is-centered'/>
         </div>
       ),
       disableSortBy: true,
@@ -159,7 +159,9 @@ const Users = () => {
       delete clonedElem.id;
       delete clonedElem.isAdmin;
       delete clonedElem.logoUrl;
-      return Object.values(clonedElem).some((field) =>
+      delete clonedElem.biReports;
+      delete clonedElem.reportObj;
+      return Object.values(clonedElem).some((field) => 
         field.toLowerCase().includes(search.toLowerCase())
       );
     })
@@ -220,7 +222,7 @@ const Users = () => {
             </p>
           </header>
           <div className="b-table">
-            {loading ? <ClipLoader /> : <Table columns={columns} data={data} />}
+            {loading ? <ClipLoader className="cliploader-center" /> : <Table columns={columns} data={data} />}
             {error && 'Show error'}
           </div>
         </div>

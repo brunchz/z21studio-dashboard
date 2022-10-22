@@ -112,5 +112,8 @@
   "AddPastReports.delete": "Delete",
   "AddPastReports.confirm": "Confirm action",
   "AddPastReports.permDelete": "This will permanently delete this report. Action can not be undone.",
-  "AddPastReports.cancel": "Cancel"
+  "AddPastReports.cancel": "Cancel",
+  "PastReports.pastReports": "Past Reports",
+  "PastReports.allReports": "All Reports",
+  "PastReport.filename": "File Name"
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import ReduxToastr from 'react-redux-toastr';
+import "@fontsource/dm-sans";
 
 import LanguageWrapper from 'components/LanguageWrapper';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';

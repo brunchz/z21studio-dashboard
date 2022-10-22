@@ -10,5 +10,5 @@ export default {
   SUBMENU_1: '/submenu1',
   SUBMENU_2: '/submenu2',
   REPORT: '/report/:name',
-  PAST_REPORTS: '/section'
+  PAST_REPORTS: '/past-reports'
 };

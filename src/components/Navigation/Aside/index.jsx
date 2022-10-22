@@ -133,7 +133,7 @@ const Aside = ({ handleMobileToggle }) => {
                 onClick={handleMobileToggle}
               >
                 <span className="icon">
-                  <i className="mdi mdi-newspaper-variant-multiple" />
+                  <i className="mdi mdi-file-document" />
                 </span>
                 <span className="menu-item-label">{useFormatMessage('Aside.pastReports')}</span>
               </NavLink>
