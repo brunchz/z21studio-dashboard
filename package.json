@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fontsource/dm-sans": "^4.5.9",
     "@hookform/resolvers": "^0.1.0",
     "bulma": "^0.9.1",
     "classnames": "^2.2.6",
