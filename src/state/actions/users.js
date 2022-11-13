@@ -298,19 +298,20 @@ export const modifyUser = ({
     let deleteLogoTask;
     let uploadLogoTask;
     let newLogoUrl = null;
+
     if (file) {
       newLogoUrl = getLogoUrl(id, file);
       deleteLogoTask = logoUrl && deleteLogo(logoUrl);
       uploadLogoTask = uploadLogo(id, file);
     }
-
+    
     const userData = {
       name,
-      biReports,
+      biReports: biReports ||  user.biReports,
       location,
       createdAt,
       isAdmin: isAdmin || user.isAdmin,
-      logoUrl: logoUrl || newLogoUrl,
+      logoUrl: newLogoUrl || user.logoUrl,
     };
 
     const updateUserDbTask = updateDocument('users', id, userData);
