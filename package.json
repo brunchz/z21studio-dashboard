@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fontsource/dm-sans": "^4.5.9",
     "@hookform/resolvers": "^0.1.0",
     "bulma": "^0.9.1",
     "classnames": "^2.2.6",
@@ -71,7 +70,7 @@
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jest": "^23.18.0",
     "eslint-plugin-jsx-a11y": "^6.3.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.5",
     "husky": "^4.3.5",
