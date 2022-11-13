@@ -18,7 +18,9 @@ const Report = () => {
 
   let iframe;
 
-  if (name === 'meta'&& biReports.metaReport) {
+  if (name === 'daily-report' && biReports.dailyReport) {
+    iframe = <iframe style={{ width: "95%", height: "100vh" }} title={useFormatMessage(name)} src={biReports.dailyReport} />;
+  } else if (name === 'meta' && biReports.metaReport) {
     iframe = <iframe style={{ width: "95%", height: "100vh" }} title={useFormatMessage(name)} src={biReports.metaReport} />;
   } else if (name === 'shopify' && biReports.shopifyReport) {
     iframe = <iframe style={{ width: "95%", height: "100vh" }} title={useFormatMessage(name)} src={biReports.shopifyReport} />;
@@ -28,7 +30,7 @@ const Report = () => {
     iframe = "You don't have a subcription to this report.";
   }
   
-  const redirect = (name !== 'meta' && name !== 'shopify' && name !== 'google') && (
+  const redirect = (name !== 'daily-report' && name !== 'meta' && name !== 'shopify' && name !== 'google') && (
     <Redirect to={paths.ROOT} />
   );
 

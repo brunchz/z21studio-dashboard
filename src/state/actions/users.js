@@ -311,7 +311,7 @@ export const modifyUser = ({
       location,
       createdAt,
       isAdmin: isAdmin || user.isAdmin,
-      logoUrl: newLogoUrl || user.logoUrl,
+      logoUrl: newLogoUrl || logoUrl
     };
 
     const updateUserDbTask = updateDocument('users', id, userData);
