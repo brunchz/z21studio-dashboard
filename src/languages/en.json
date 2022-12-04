@@ -110,6 +110,7 @@
   "Report.meta": "Meta Report",
   "Report.shopify": "Shopify Report",
   "Report.google": "Google Report",
+  "Report.dailyReport": "Daily Performance Report",
   "AddPastReports.title":"Add Past Reports",
   "AddPastReports.reportsTable": "Past Reports Table",
   "AddPastReports.uploadReport": "Upload Past Report",
