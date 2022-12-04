@@ -65,3 +65,15 @@ body {
   left: "50%";
   transform: "translate(-50%, -50%)";
 }
+
+// .aside.aside.is-expanded {
+//   width: 15rem;
+// }
+// .aside.aside.is-expanded .menu-list .icon {
+//   width:2rem;
+// }
+.aside.aside .menu-list li a.has-icon .menu-item-label {
+  height:auto;
+  min-height:1.5rem;
+  max-height: 3rem;
+}
