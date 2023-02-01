@@ -1,0 +1,46 @@
+{
+    "users":{
+        "user1":{
+            "name":"Oxwhite",
+            "createdAt":"2022-01-01 00:00:00",
+            "email": "admin@oxwhite.com",
+            "isAdmin": false,
+            "logoUrl": "https://firebase.logourl/oxwhite.png",
+            "contact": "0123456789",
+            "isDisabled": false,    
+            "data":{
+                "currentReports":{
+                    "metaAds": {
+                        "name": "Meta Ads",
+                        "isEnabled": true,
+                        "updatedAt":"2021-08-28 08:04:12",
+                        "url":"https://iframe-embded-link-meta" 
+                    },
+                    "googleAds": {
+                        "name": "Google Ads",
+                        "isEnabled": false,
+                        "updatedAt":"2021-08-28 08:04:12",
+                        "url":"https://iframe-embded-link-google"  
+                    }
+                },
+                "pastReports":{
+                    "FJBSHASKSS":{
+                        "name":"Oxwhite Report March 2022",
+                        "createdAt": "2022-01-01 00:00:00",
+                        "url": "https://link-to-report"
+                    }
+                },
+                "fileStorage":{
+                    "EAMSDNASJD":{
+                        "name":"Oxwhite_Presentation_2022.pptx",
+                        "createdAt": "2022-01-01 00:00:00",
+                        "url": "https://link-to-report"
+                    }
+                },
+                "projectBasedServices": "Shopify Development/Revamp, Email Marketing (Automation), Business Intelligence"
+            }
+        },
+        "user2":{},
+        "user3":{}
+    }
+}
