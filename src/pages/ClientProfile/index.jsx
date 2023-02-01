@@ -2,9 +2,7 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useFormatMessage } from 'hooks';
 import { getMonthsBetween } from 'utils';
-
-
-import './ClientProfile.scss';
+import ServicesCard from 'components/ServicesCard';
 
 const ClientProfile = () => {
   const { userData } = useSelector(
@@ -100,11 +98,14 @@ const ClientProfile = () => {
               </div>
             </div>
           </div>
-
-          <div style={{ display: "flex", flexDirection: "column" }} className="tile is-parent">
+          <div className='tile' style={{ display: "flex", flexDirection: "column" }}>
+            <ServicesCard title={useFormatMessage('ClientProfile.continuousServices')} isContinuous/>
+            <ServicesCard title={useFormatMessage('ClientProfile.projectServices')} />
+          </div>
+          {/* <div style={{ display: "flex", flexDirection: "column" }} className="tile is-parent">
             <div className="card tile is-child">
               <header className="card-header">
-                <p className="card-header-title">
+                // <p className="card-header-title">
                   <span className="icon is-medium">
                     <i className="mdi mdi-18px mdi-chart-areaspline default" />
                   </span>
@@ -183,7 +184,7 @@ const ClientProfile = () => {
               </div>
             </div>
 
-          </div>
+          </div> */}
 
         </div>
       </section>
