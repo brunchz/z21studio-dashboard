@@ -2,63 +2,54 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-import { useFormatDate } from 'hooks';
+// import { useFormatDate } from 'hooks';
 import ServicesTable from 'components/ServicesTable';
-// import classNames from 'classnames';
 
-const ServicesCard = ({title, isContinuous}) => {
-    const { reportObj, loading } = useSelector(
+const ContinuousServicesCard = ({ title, servicesObj }) => {
+    const { loading } = useSelector(
         (state) => ({
-            id: state.auth.userData.id,
-            reportObj: state.auth.userData.reportObj,
-            loading: state.users.loading,
+            loading: state.users.loading
         }),
         shallowEqual
     );
 
-    const serviceIcon = isContinuous ? 'mdi-chart-areaspline' : 'mdi-application';
-
-    const reports = reportObj ? Object.entries(reportObj).map(([key, value]) => {
+    const services = servicesObj ? Object.entries(servicesObj).map(([key, value]) => {
         return {
             id: key,
-            ...value,
+            value,
         };
     }) : null;
 
     const columns = [
         {
             Header: '',
-            accessor: 'reportObj.reportUrl',
+            id:'index',
+            accessor: 'services',
             Cell: ({ row }) => (
                 <p>{row.index + 1}.</p>
             ),
         },
         {
             Header: '',
-            accessor: 'reportDate',
+            accessor: 'services',
             Cell: ({ row }) => (
 
                 <p>
-                    {useFormatDate(row.original.reportDate, {
-                        weekday: 'short',
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                    })}
+                    {row.original.value.name}
                 </p>
             ),
         },
         {
             Header: '',
             id: 'actions',
-            accessor: 'actions',
+            accessor: 'services',
             Cell: ({ row }) => (
-                row.original.reportUrl ?
+                row.original.value.reportUrl ?
                     <span className="icon has-text-primary">
                         <i className="mdi mdi-18px mdi-check-circle" />
                     </span>
                     :
-                    <span className="icon has-text-primary">
+                    <span className="icon">
                         <i className="mdi mdi-18px mdi-lock" />
                     </span>
 
@@ -73,22 +64,15 @@ const ServicesCard = ({title, isContinuous}) => {
                     <header className="card-header">
                         <p className="card-header-title">
                             <span className="icon is-centered">
-                                <i className={`mdi ${serviceIcon}`} />
+                                <i className="mdi mdi-chart-areaspline"/>
                             </span>
                             {title}
                         </p>
                     </header>
-                    {!reports ? (
-                        <p className="card-content">
-                            No reports found.
-                        </p>)
-                        :
-                        (
-                            <div className="b-table">
-                                {loading ? <ClipLoader className="cliploader-center" /> : <ServicesTable columns={columns} data={reports} />}
-                            </div>
-                        )
-                    }
+
+                    <div className="b-table">
+                        {loading ? <ClipLoader className="cliploader-center" /> : <ServicesTable columns={columns} data={services} />}
+                    </div>
 
                 </div>
             </div>
@@ -96,4 +80,4 @@ const ServicesCard = ({title, isContinuous}) => {
     );
 };
 
-export default ServicesCard;
+export default ContinuousServicesCard;

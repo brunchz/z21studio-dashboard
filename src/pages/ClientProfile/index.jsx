@@ -2,7 +2,8 @@ import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { useFormatMessage } from 'hooks';
 import { getMonthsBetween } from 'utils';
-import ServicesCard from 'components/ServicesCard';
+import ContinuousServicesCard from 'components/ContinuousServicesCard';
+import ProjectServicesCard from 'components/ProjectServicesCard';
 
 const ClientProfile = () => {
   const { userData } = useSelector(
@@ -99,93 +100,15 @@ const ClientProfile = () => {
             </div>
           </div>
           <div className='tile' style={{ display: "flex", flexDirection: "column" }}>
-            <ServicesCard title={useFormatMessage('ClientProfile.continuousServices')} isContinuous/>
-            <ServicesCard title={useFormatMessage('ClientProfile.projectServices')} />
+            <ContinuousServicesCard 
+            title={useFormatMessage('ClientProfile.continuousServices')} 
+            servicesObj={userData.services.continuous}
+            />
+            <ProjectServicesCard 
+            title={useFormatMessage('ClientProfile.projectServices')}
+            servicesObj={userData.services.projectBased}
+            />
           </div>
-          {/* <div style={{ display: "flex", flexDirection: "column" }} className="tile is-parent">
-            <div className="card tile is-child">
-              <header className="card-header">
-                // <p className="card-header-title">
-                  <span className="icon is-medium">
-                    <i className="mdi mdi-18px mdi-chart-areaspline default" />
-                  </span>
-                  {useFormatMessage('ClientProfile.continuousServices')}
-                </p>
-              </header>
-              <div className="card-content">
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <span className="icon has-text-primary">
-                      <i className="mdi mdi-18px mdi-check-circle" />
-                    </span>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <p className='input is-static'>{userData.email}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <span className="icon has-text-primary">
-                      <i className="mdi mdi-18px mdi-check-circle" />
-                    </span>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <p className='input is-static'>{userData.email}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="card tile is-child">
-              <header className="card-header">
-                <p className="card-header-title">
-                  <span className="icon is-medium">
-                    <i className="mdi mdi-24px mdi-application default" />
-                  </span>
-                  {useFormatMessage('ClientProfile.projectServices')}
-                </p>
-              </header>
-              <div className="card-content">
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <span className="icon has-text-primary">
-                      <i className="mdi mdi-18px mdi-check-circle" />
-                    </span>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <p className='input is-static'>{userData.email}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="field is-horizontal">
-                  <div className="field-label is-normal">
-                    <span className="icon">
-                      <i className="mdi mdi-18px mdi-lock" />
-                    </span>
-                  </div>
-                  <div className="field-body">
-                    <div className="field">
-                      <div className="control">
-                        <p className='input is-static'>{userData.email}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div> */}
-
         </div>
       </section>
     </>

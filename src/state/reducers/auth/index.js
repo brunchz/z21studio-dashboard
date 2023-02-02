@@ -66,7 +66,9 @@ export const authReducer = createReducer(
         reportObj:payload.reportObj,
         location: payload.location,
         logoUrl: payload.logoUrl,
-        createdAt: payload.createdAt
+        createdAt: payload.createdAt,
+        contact: payload.contact,
+        services: payload.services
       },
       loading: false,
       error: null
@@ -145,7 +147,9 @@ export const authReducer = createReducer(
         reportObj:payload.reportObj,
         location: payload.location,
         logoUrl: payload.logoUrl || state.userData.logoUrl,
-        createdAt: payload.createdAt
+        createdAt: payload.createdAt,
+        contact: payload.contact,
+        services: payload.services
       }
     }),
     [AUTH_PROVIDER_INIT]: state => ({
@@ -163,7 +167,9 @@ export const authReducer = createReducer(
         reportObj:payload.reportObj,
         location: payload.location,
         logoUrl: payload.logoUrl,
-        createdAt: payload.createdAt
+        createdAt: payload.createdAt,
+        contact: payload.contact,
+        services: payload.services
       },
       error: null,
       loading: false
