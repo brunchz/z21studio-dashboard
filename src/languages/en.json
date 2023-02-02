@@ -90,6 +90,8 @@
   "UserForm.googleReport": "Google Report",
   "UserForm.userPreview": "User Preview",
   "UserForm.report": "Upload Past Report",
+  "UserForm.contact": "Contact",
+  "UserForm.joined": "Date Joined",
   "auth/email-already-exists": "Email already in use",
   "auth/invalid-email": "Email is invalid",
   "auth/wrong-password": "Invalid credentials",
@@ -122,5 +124,8 @@
   "AddPastReports.cancel": "Cancel",
   "PastReports.pastReports": "Past Reports",
   "PastReports.allReports": "All Reports",
-  "PastReport.filename": "File Name"
+  "PastReport.filename": "File Name",
+  "ClientProfile.services":"Services",
+  "ClientProfile.projectServices":"Project-Based Services",
+  "ClientProfile.continuousServices":"Continuous Services"
 }

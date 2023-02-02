@@ -181,7 +181,7 @@ const Aside = ({ handleMobileToggle }) => {
           {!isAdmin && (
             <li>
               <NavLink
-                to={paths.PROFILE}
+                to={paths.CLIENT_PROFILE}
                 className="has-icon"
                 onClick={handleMobileToggle}
               >

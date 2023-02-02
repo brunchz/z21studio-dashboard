@@ -1,0 +1,59 @@
+{
+    "continuous": {
+        "meta": {
+            "name": "Meta Ads",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "google": {
+            "name": "Google Ads",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "tiktok": {
+            "name": "Tik Tok Ads",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "linkedIn": {
+            "name": "LinkedIn Ads",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "CPAS": {
+            "name": "CPAS (Marketplace) Ads",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "dataAnalytics": {
+            "name": "Data Analytics",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "adCreatives": {
+            "name": "Ad Creatives",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "emailMarketing": {
+            "name": "Email Marketing (Campaign)",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        },
+        "cro": {
+            "name": "Conversion Rate Optimization",
+            "reportUrl": "https://app.powerbi.com/view?r=eyJrIjoiMjdiNGQ2ZmEtNWE1MS00NDUwLWFkOTQtY2FhMTE1MjU1NTgyIiwidCI6IjU4YzQ4ODYyLWE4MjQtNGY1ZC05NjJhLWRlMzRjOGYwZjY1MCIsImMiOjEwfQ%3D%3D",
+            "asideVisible": true,
+            "isEnabled": true
+        }
+    },
+    "projectBased": ["Shopify Devlopment/ Revamp", "Email Marketing (Automation)", "Business Intelligence"]
+}

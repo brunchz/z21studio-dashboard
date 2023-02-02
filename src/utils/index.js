@@ -79,3 +79,8 @@ export const uiConfig = (onSignInSuccessHandler, onSignInFailHandler) => {
     ],
   };
 };
+
+export const getMonthsBetween = (dateFrom, dateTo) => {
+  return dateTo.getMonth() - dateFrom.getMonth() +
+    (12 * (dateTo.getFullYear() - dateFrom.getFullYear()));
+};

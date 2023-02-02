@@ -5,6 +5,7 @@ import Login from 'pages/Login';
 import Home from 'pages/Home';
 import Users from 'pages/Users';
 import Profile from 'pages/Profile';
+import ClientProfile from 'pages/ClientProfile';
 import ResetPassword from 'pages/ResetPassword';
 import NotFound from 'pages/NotFound';
 import User from 'pages/User';
@@ -25,6 +26,7 @@ const RouterComponent = () => {
         <PrivateRoute path={paths.MODIFY_USER} component={User} />
         <PrivateRoute path={paths.USERS} component={Users} />
         <PrivateRoute path={paths.PROFILE} component={Profile} />
+        <PrivateRoute path={paths.CLIENT_PROFILE} component={ClientProfile} />
         <PrivateRoute path={paths.SECTION} component={Section} />
         <PrivateRoute path={paths.REPORT} component={Report}/>
         <PrivateRoute path={paths.PAST_REPORTS} component={PastReports}/>
